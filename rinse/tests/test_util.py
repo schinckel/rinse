@@ -3,6 +3,7 @@
 """Unit tests for rinse.util module."""
 
 import unittest
+import six
 from lxml import etree
 
 from ..util import recursive_dict
@@ -10,7 +11,7 @@ from ..util import recursive_dict
 
 class TestRecursiveDict(unittest.TestCase):
     def test_recursive_dict_function(self):
-        doc = etree.fromstring('''<?xml version="1.0" encoding="UTF-8"?>
+        doc = etree.fromstring(six.b('''<?xml version="1.0" encoding="UTF-8"?>
             <SOAP-ENV:Envelope
               xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
               xmlns:ns1="https://example.com/soap/v3"
@@ -30,6 +31,6 @@ class TestRecursiveDict(unittest.TestCase):
                 </ns1:authenticateResponse>
               </SOAP-ENV:Body>
             </SOAP-ENV:Envelope>
-        ''')
+        '''))
 
         recursive_dict(doc)
