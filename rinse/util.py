@@ -8,6 +8,7 @@ import textwrap
 import defusedxml.lxml
 import lxml.builder
 from lxml import etree
+import six
 
 RINSE_DIR = os.path.dirname(__file__)
 ENVELOPE_XSD = 'soap-1.1_envelope.xsd'
@@ -160,14 +161,13 @@ def recursive_dict(element):
             for child
             in element
         )
+    if six.PY2:
+        kwargs = {'width': 10000}
+    else:
+        kwargs = {'compact': True, 'width': 10000}
     return (
-        '{}{}'.format(
-            element.tag,
-            pprint.pformat(element.attrib, compact=True, width=10000),
-        ),
-        dict(
-            map(recursive_dict, element)
-        ) or element.text
+        '{}{}'.format(element.tag, pprint.pformat(element.attrib, **kwargs)),
+        dict(map(recursive_dict, element)) or element.text
     )
 
 
