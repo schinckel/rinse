@@ -1,5 +1,4 @@
 """Rinse SOAP library: module providing WSDL functions."""
-from lxml import etree
 from rinse.util import (
     safe_parse_path, safe_parse_url, element_as_tree, cached_property,
 )
